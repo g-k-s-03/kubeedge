@@ -40,10 +40,10 @@ func TestImagePrePullJobUpdateNodeTaskStatus(t *testing.T) {
 		patches := gomonkey.NewPatches()
 		defer patches.Reset()
 
-		gomonkey.ApplyFunc(status.GetImagePrePullJobStatusUpdater, func() *status.StatusUpdater {
+		patches.ApplyFunc(status.GetImagePrePullJobStatusUpdater, func() *status.StatusUpdater {
 			return &status.StatusUpdater{}
 		})
-		gomonkey.ApplyMethodFunc(reflect.TypeOf(&status.StatusUpdater{}), "UpdateStatus",
+		patches.ApplyMethodFunc(reflect.TypeOf(&status.StatusUpdater{}), "UpdateStatus",
 			func(opts status.UpdateStatusOptions) {
 				act, ok := opts.ActionStatus.(*operationsv1alpha2.ImagePrePullJobActionStatus)
 				require.True(t, ok)
@@ -67,10 +67,10 @@ func TestImagePrePullJobUpdateNodeTaskStatus(t *testing.T) {
 		patches := gomonkey.NewPatches()
 		defer patches.Reset()
 
-		gomonkey.ApplyFunc(status.GetImagePrePullJobStatusUpdater, func() *status.StatusUpdater {
+		patches.ApplyFunc(status.GetImagePrePullJobStatusUpdater, func() *status.StatusUpdater {
 			return &status.StatusUpdater{}
 		})
-		gomonkey.ApplyMethodFunc(reflect.TypeOf(&status.StatusUpdater{}), "UpdateStatus",
+		patches.ApplyMethodFunc(reflect.TypeOf(&status.StatusUpdater{}), "UpdateStatus",
 			func(opts status.UpdateStatusOptions) {
 				act, ok := opts.ActionStatus.(*operationsv1alpha2.ImagePrePullJobActionStatus)
 				require.True(t, ok)
@@ -118,10 +118,10 @@ func TestImagePrePullJobUpdateNodeTaskStatusReturnsErrorOnCallbackFailure(t *tes
 			patches := gomonkey.NewPatches()
 			defer patches.Reset()
 
-			gomonkey.ApplyFunc(status.GetImagePrePullJobStatusUpdater, func() *status.StatusUpdater {
+			patches.ApplyFunc(status.GetImagePrePullJobStatusUpdater, func() *status.StatusUpdater {
 				return &status.StatusUpdater{}
 			})
-			gomonkey.ApplyMethodFunc(reflect.TypeOf(&status.StatusUpdater{}), "UpdateStatus",
+			patches.ApplyMethodFunc(reflect.TypeOf(&status.StatusUpdater{}), "UpdateStatus",
 				func(opts status.UpdateStatusOptions) {
 					require.NotNil(t, opts.Callback)
 					opts.Callback(c.callbackErr)
